@@ -1,15 +1,15 @@
 RECIPES:
 GET:
 {
-    id: '123',
-    ingredents: ingredients[],
-    name: string
-    decription: string
-    link: string
-    url: string
+    id: i32',
+    ingredents: ingredients[], 
+    name: string // name eg. pizz
+    decription: string // instructions or description of the recipe
+    url: string // link to image
+    link: string // link to website if there
 }[]
 
-ingredients
+ingredients:
 {
     id: IngredientId, 
     quantity: number, 
@@ -20,14 +20,28 @@ ingredients
 ingredient:
 {
     id: string
-    name: string
+    names: {
+        english: string
+        fr: string
+        nl: string
+    },
+    group: 'herbs and spices' | 'meat'
+    subgroup: 'herbs'
     url?: string
 }
 
-shopping cart:
+shopping list:
 {
     recipes: Recipes[]
     id: string
     date: string
-    list: ingredients[]
+    list: listItem[]
+}
+
+listItem {
+    complete: bool
+    ingredientId: i32
+    name: string
+    quantiy: number
+    metric: string // 'ammount' | 'handfuls' | 'cups'
 }

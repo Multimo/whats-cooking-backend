@@ -1,1 +1,1 @@
-CREATE TABLE recipe
+DROP TABLE recipes

@@ -1,0 +1,7 @@
+CREATE TABLE ingredients (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR NOT NULL,
+    url VARCHAR NOT NULL,
+    ingredients INTEGER [],
+    createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+)

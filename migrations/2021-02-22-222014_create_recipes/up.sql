@@ -3,5 +3,6 @@ CREATE TABLE recipes (
     name VARCHAR NOT NULL,
     url VARCHAR NOT NULL,
     createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    ingredients: INTEGER [],
     description TEXT NOT NULL
 )

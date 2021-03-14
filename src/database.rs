@@ -28,7 +28,7 @@ impl Repo {
         Repo { connection_pool }
     }
 
-    pub fn conn(&self) -> PooledConnection<ConnectionManager<PgConnection>> {
+    pub fn get_connection(&self) -> PooledConnection<ConnectionManager<PgConnection>> {
         self.connection_pool.get().unwrap()
     }
 }

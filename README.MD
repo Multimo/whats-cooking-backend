@@ -1,3 +1,9 @@
+# Todos
+ - preload ingredients into db on startup
+ - allow models to include ingredients
+
+# schemas
+
 RECIPES:
 GET:
 {
@@ -16,18 +22,20 @@ ingredients:
     metric: string
 },
 
-
+	Name 	Scientific name 	Food group 	Food subgroup 
 ingredient:
 {
     id: string
-    names: {
+    name: string
+    scientificName: string
+    group: 'herbs and spices' | 'meat'
+    subgroup: 'herbs'
+    <!-- names: {
         english: string
         fr: string
         nl: string
-    },
-    group: 'herbs and spices' | 'meat'
-    subgroup: 'herbs'
-    url?: string
+    }, -->
+    <!-- url?: string -->
 }
 
 shopping list:
@@ -45,3 +53,4 @@ listItem {
     quantiy: number
     metric: string // 'ammount' | 'handfuls' | 'cups'
 }
+

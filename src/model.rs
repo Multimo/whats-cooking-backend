@@ -6,9 +6,10 @@ use serde::{Deserialize, Serialize};
 pub struct Recipe {
     pub id: i32,
     pub name: String,
-    pub description: String,
-    // pub ingredients: Vec<i32>,
     pub url: String,
+    pub description: String,
+    // pub link: String,
+    // pub ingredients: Vec<(i32, i32)>,
 }
 
 // #[derive(Queryable, Serialize, Identifiable)]
@@ -24,6 +25,7 @@ pub struct Recipe {
 pub struct CreateRecipeBody {
     pub name: String,
     pub description: String,
-    // pub ingredients: Vec<i32>,
+    // pub link: String,
     pub url: String,
+    // pub ingredients: Vec<i32>,
 }

@@ -3,10 +3,6 @@ use tide::prelude::*;
 use crate::model;
 use crate::repo::{IRepository, Repository};
 
-use crate::State;
-
-pub type StatefulRequest = tide::Request<State<Repository>>;
-
 pub async fn handle_get_all_recipes(req: StatefulRequest) -> tide::Result {
     let recipes = &req.state().repository.get_recipes().unwrap();
     let json = json!({

@@ -7,8 +7,7 @@ use dotenv::dotenv;
 use std::env;
 
 mod database;
-use crate::handlers::*;
-mod handlers;
+use crate::handlers::{IRepository, Repository};
 
 use crate::repo::*;
 mod repo;

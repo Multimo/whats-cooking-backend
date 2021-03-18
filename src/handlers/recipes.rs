@@ -1,7 +1,6 @@
-use tide::prelude::*;
-
+use crate::handlers::StatefulRequest;
 use crate::model;
-use crate::repo::{IRepository, Repository};
+use tide::prelude::*;
 
 pub async fn handle_get_all_recipes(req: StatefulRequest) -> tide::Result {
     let recipes = &req.state().repository.get_recipes().unwrap();

@@ -1,14 +1,12 @@
 #[macro_use]
 extern crate diesel;
-pub mod model;
-pub mod schema;
-
 use dotenv::dotenv;
 use std::env;
 
 mod database;
-use crate::handlers::{IRepository, Repository};
-
+mod handlers;
+pub mod model;
+pub mod schema;
 use crate::repo::*;
 mod repo;
 
@@ -33,12 +31,12 @@ async fn main() -> tide::Result<()> {
     tide::log::start();
 
     api.at("/recipes")
-        .get(handle_get_all_recipes)
-        .post(handle_create_recipes);
+        .get(handlers::recipes::handle_get_all_recipes)
+        .post(handlers::recipes::handle_create_recipes);
     api.at("/recipe/:id")
-        .get(handle_get_recipe)
-        .patch(handle_update_recipes)
-        .delete(handle_delete_recipes);
+        .get(handlers::recipes::handle_get_recipe)
+        .patch(handlers::recipes::handle_update_recipes)
+        .delete(handlers::recipes::handle_delete_recipes);
 
     api.listen("127.0.0.1:8082").await?;
     Ok(())

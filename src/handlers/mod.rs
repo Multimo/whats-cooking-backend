@@ -1,4 +1,4 @@
-use crate::repo::Repository;
+use crate::repo::{IRepository, Repository};
 use crate::State;
 
 pub type StatefulRequest = tide::Request<State<Repository>>;

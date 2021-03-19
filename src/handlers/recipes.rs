@@ -1,5 +1,6 @@
 use crate::handlers::StatefulRequest;
 use crate::model;
+use crate::repo::IRepository;
 use tide::prelude::*;
 
 pub async fn handle_get_all_recipes(req: StatefulRequest) -> tide::Result {

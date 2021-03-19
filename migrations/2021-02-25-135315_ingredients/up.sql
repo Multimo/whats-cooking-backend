@@ -1,8 +1,10 @@
 CREATE TABLE ingredients (
     id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    name VARCHAR(100) NOT NULL,
-    scientific_name VARCHAR(200) NOT NULL,
-    "group" VARCHAR(100) NOT NUll,
-    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    url VARCHAR(250)
+    name VARCHAR(200) NOT NULL,
+    name_scientific VARCHAR(200),
+    food_group TEXT,
+    food_subgroup VARCHAR(250),
+    decription TEXT
 );
+COPY ingredients
+from '/var/lib/postgres/fixtures/ingredients.csv' DELIMITER ',' CSV HEADER;

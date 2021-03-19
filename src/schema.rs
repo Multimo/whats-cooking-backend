@@ -2,10 +2,10 @@ table! {
     ingredients (id) {
         id -> Int4,
         name -> Varchar,
-        scientific_name -> Varchar,
-        group -> Varchar,
-        created_at -> Timestamp,
-        url -> Nullable<Varchar>,
+        name_scientific -> Nullable<Varchar>,
+        food_group -> Nullable<Text>,
+        food_subgroup -> Nullable<Varchar>,
+        decription -> Nullable<Text>,
     }
 }
 
@@ -33,15 +33,6 @@ table! {
 }
 
 table! {
-    shopping_lists (id) {
-        id -> Int4,
-        createdat -> Timestamp,
-        updatedat -> Nullable<Timestamp>,
-        active -> Bool,
-    }
-}
-
-table! {
     shopping_list_ingredients (id) {
         id -> Int4,
         shopping_list_id -> Int4,
@@ -62,6 +53,15 @@ table! {
     }
 }
 
+table! {
+    shopping_lists (id) {
+        id -> Int4,
+        created_at -> Timestamp,
+        updated_at -> Nullable<Timestamp>,
+        active -> Bool,
+    }
+}
+
 joinable!(recipe_ingredients -> ingredients (ingredient_id));
 joinable!(recipe_ingredients -> recipes (recipe_id));
 joinable!(shopping_list_ingredients -> ingredients (ingredient_id));
@@ -73,7 +73,7 @@ allow_tables_to_appear_in_same_query!(
     ingredients,
     recipe_ingredients,
     recipes,
-    shopping_lists,
     shopping_list_ingredients,
     shopping_list_recipes,
+    shopping_lists,
 );

@@ -7,5 +7,11 @@ services:
       POSTGRES_USER: postgres
     volumes: 
       - ./pgdata:/var/lib/postgres/
+      - ./fixtures:/var/lib/postgres/fixtures/
     ports:
       - "5432:5432"
+  # app:
+  #   image: .
+  #   environment: 
+  #   ports:
+  #     - "5432:5432"

@@ -1,20 +1,25 @@
 use crate::database::Repo;
-use crate::model::{CreateRecipeBody, Recipe};
+use crate::model::{CreateRecipeBody, Ingredient, Recipe};
 use crate::schema;
 
 use diesel::prelude::*;
 
 pub trait IRepository {
+    // Recipes
     fn get_recipes(&self) -> Result<Vec<Recipe>, String>;
     fn get_recipe(&self, id: i32) -> Result<Recipe, String>;
     fn create_recipe(&self, recipe: &CreateRecipeBody) -> Result<(), String>;
     fn delete_recipe(&self, id: i32) -> Result<(), String>;
     fn update_recipe(&self, id: i32, recipe: &CreateRecipeBody) -> Result<(), String>;
+
+    // Ingredients
+    fn get_all_ingredients(&self) -> Result<Vec<Ingredient>, String>;
 }
 
 #[derive(Clone)]
 pub struct Repository(pub Repo);
 
+// Recipes
 impl IRepository for Repository {
     fn get_recipes(&self) -> Result<Vec<Recipe>, String> {
         use schema::recipes::dsl::*;
@@ -84,5 +89,16 @@ impl IRepository for Repository {
             .expect("Error saving new recipe");
 
         Ok(())
+    }
+
+    fn get_all_ingredients(&self) -> Result<Vec<Ingredient>, String> {
+        use schema::ingredients::dsl::*;
+
+        let connection = self.0.get_connection();
+
+        let ingredients_res = ingredients
+            .load::<Ingredient>(&connection)
+            .expect("Error getting all ingredients");
+        return Ok(ingredients_res);
     }
 }

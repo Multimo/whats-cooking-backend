@@ -26,20 +26,19 @@ pub struct CreateRecipeBody {
 #[derive(Queryable, Serialize, Identifiable)]
 pub struct Ingredient {
     pub id: i32,
-    pub created_at: NaiveDateTime,
     pub name: String,
-    pub scientific_name: String,
-    pub group: String,
-    pub url: String,
+    pub name_scientific: Option<String>,
+    pub food_group: Option<String>,
+    pub food_subgroup: Option<String>,
+    pub decription: Option<String>,
 }
 
 #[derive(Insertable, Deserialize, AsChangeset)]
 #[table_name = "ingredients"]
 pub struct NewIngredient {
     pub name: String,
-    pub scientific_name: String,
-    pub group: String,
-    pub url: String,
+    pub name_scientific: String,
+    pub food_group: String,
 }
 
 #[derive(Queryable, Serialize, Identifiable)]

@@ -28,9 +28,9 @@ pub struct Ingredient {
     pub id: i32,
     pub name: String,
     pub name_scientific: Option<String>,
+    pub decription: Option<String>,
     pub food_group: Option<String>,
     pub food_subgroup: Option<String>,
-    pub decription: Option<String>,
 }
 
 #[derive(Insertable, Deserialize, AsChangeset)]

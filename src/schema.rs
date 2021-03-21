@@ -3,9 +3,9 @@ table! {
         id -> Int4,
         name -> Varchar,
         name_scientific -> Nullable<Varchar>,
+        decription -> Nullable<Text>,
         food_group -> Nullable<Text>,
         food_subgroup -> Nullable<Varchar>,
-        decription -> Nullable<Text>,
     }
 }
 

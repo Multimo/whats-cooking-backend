@@ -1,1 +1,1 @@
-DROP TABLE shopping_list;
+DROP TABLE shopping_lists;

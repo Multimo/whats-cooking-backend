@@ -39,6 +39,8 @@ pub struct NewIngredient {
     pub name: String,
     pub name_scientific: String,
     pub food_group: String,
+    pub food_subgroup: Option<String>,
+    pub decription: Option<String>,
 }
 
 #[derive(Queryable, Serialize, Identifiable)]
@@ -47,9 +49,9 @@ pub struct RecipeIngredient {
     pub recipe_id: i32,
     pub ingredient_id: i32,
     pub quantity: i32,
-    pub metric: String,
+    pub metric: Option<String>,
     pub created_at: NaiveDateTime,
-    pub updated_at: NaiveDateTime,
+    pub updated_at: Option<NaiveDateTime>,
 }
 
 #[derive(Insertable, Deserialize, AsChangeset)]

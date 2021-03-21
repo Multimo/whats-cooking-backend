@@ -1,5 +1,5 @@
 use crate::database::Repo;
-use crate::model::{CreateRecipeBody, Ingredient, Recipe};
+use crate::model::{CreateRecipeBody, Ingredient, NewRecipeIngredient, Recipe, RecipeIngredient};
 use crate::schema;
 
 use diesel::prelude::*;
@@ -14,12 +14,18 @@ pub trait IRepository {
 
     // Ingredients
     fn get_all_ingredients(&self) -> Result<Vec<Ingredient>, String>;
+
+    // Recipe Ingredient
+    fn create_recipe_ingredients(
+        &self,
+        recipe_ingredient: &NewRecipeIngredient,
+    ) -> Result<(), String>;
+    fn get_all_recipe_ingredients(&self, recipe_id: i32) -> Result<Vec<RecipeIngredient>, String>;
 }
 
 #[derive(Clone)]
 pub struct Repository(pub Repo);
 
-// Recipes
 impl IRepository for Repository {
     fn get_recipes(&self) -> Result<Vec<Recipe>, String> {
         use schema::recipes::dsl::*;
@@ -100,5 +106,33 @@ impl IRepository for Repository {
             .load::<Ingredient>(&connection)
             .expect("Error getting all ingredients");
         return Ok(ingredients_res);
+    }
+
+    fn create_recipe_ingredients(
+        &self,
+        recipe_ingredient: &NewRecipeIngredient,
+    ) -> Result<(), String> {
+        use schema::recipe_ingredients::dsl::*;
+
+        let connection = self.0.get_connection();
+
+        diesel::insert_into(recipe_ingredients)
+            .values(recipe_ingredient)
+            .execute(&connection)
+            .expect("Error saving new recipe");
+
+        Ok(())
+    }
+
+    fn get_all_recipe_ingredients(&self, recipe: i32) -> Result<Vec<RecipeIngredient>, String> {
+        use schema::recipe_ingredients::dsl::*;
+        let connection = self.0.get_connection();
+
+        let result = recipe_ingredients
+            .filter(recipe_id.eq(recipe))
+            .get_results::<RecipeIngredient>(&connection)
+            .expect("Error saving new recipe");
+
+        Ok(result)
     }
 }

@@ -10,6 +10,9 @@ pub mod schema;
 use crate::repo::*;
 mod repo;
 
+use tide::http::headers;
+use tide::security::{CorsMiddleware, Origin};
+
 #[derive(Clone)]
 pub struct State<R: 'static + IRepository + Sync + Send> {
     pub repository: R,
@@ -29,6 +32,16 @@ async fn main() -> tide::Result<()> {
 
     let mut api = tide::Server::with_state(context);
     tide::log::start();
+
+    let cors = CorsMiddleware::new()
+        .allow_methods(
+            "GET, POST, OPTIONS"
+                .parse::<headers::HeaderValue>()
+                .unwrap(),
+        )
+        .allow_origin(Origin::from("*"))
+        .allow_credentials(false);
+    api.with(cors);
 
     api.at("/recipes")
         .get(handlers::recipes::handle_get_all_recipes)

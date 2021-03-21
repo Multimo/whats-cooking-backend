@@ -19,12 +19,21 @@ pub async fn handle_get_all_recipes(req: StatefulRequest) -> tide::Result {
 }
 
 pub async fn handle_get_recipe(req: StatefulRequest) -> tide::Result {
-    let param_id = req.param("id").expect("No id in request params");
-    let recipe_id = param_id
-        .parse::<i32>()
-        .expect("failed to parse param into i32");
+    let param_id = req.param("id")?;
+    let recipe_id = param_id.parse::<i32>()?;
 
-    let recipes = &req.state().repository.get_recipe(recipe_id).unwrap();
+    let db_recipes = &req.state().repository.get_recipe(recipe_id);
+    let recipes = match db_recipes {
+        Ok(recipes) => recipes,
+        Err(error) => {
+            let json = json!({
+                "status": "Error",
+                "error": error
+            });
+            let response = tide::Response::builder(404).body(json).build();
+            return Ok(response);
+        }
+    };
 
     let ingredients = &req
         .state()
@@ -43,10 +52,8 @@ pub async fn handle_get_recipe(req: StatefulRequest) -> tide::Result {
 }
 
 pub async fn handle_delete_recipes(req: StatefulRequest) -> tide::Result {
-    let param_id = req.param("id").expect("No id in request params");
-    let recipe_id = param_id
-        .parse::<i32>()
-        .expect("failed to parse param into i32");
+    let param_id = req.param("id")?;
+    let recipe_id = param_id.parse::<i32>()?;
 
     &req.state()
         .repository

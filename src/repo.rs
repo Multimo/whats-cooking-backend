@@ -1,5 +1,7 @@
 use crate::database::Repo;
-use crate::model::{CreateRecipeBody, Ingredient, NewRecipeIngredient, Recipe, RecipeIngredient};
+use crate::model::{
+    CreateRecipeBody, Ingredient, NewIngredient, NewRecipeIngredient, Recipe, RecipeIngredient,
+};
 use crate::schema;
 
 use diesel::prelude::*;
@@ -14,6 +16,7 @@ pub trait IRepository {
 
     // Ingredients
     fn get_all_ingredients(&self) -> Result<Vec<Ingredient>, String>;
+    fn create_ingredient(&self, new_ingredient: &NewIngredient) -> Result<(), String>;
 
     // Recipe Ingredient
     fn create_recipe_ingredients(
@@ -106,6 +109,18 @@ impl IRepository for Repository {
             .load::<Ingredient>(&connection)
             .expect("Error getting all ingredients");
         return Ok(ingredients_res);
+    }
+
+    fn create_ingredient(&self, new_ingredient: &NewIngredient) -> Result<(), String> {
+        use schema::ingredients::dsl::*;
+
+        let connection = self.0.get_connection();
+
+        diesel::insert_into(ingredients)
+            .values(new_ingredient)
+            .execute(&connection)
+            .expect("Error getting all ingredients");
+        return Ok(());
     }
 
     fn create_recipe_ingredients(

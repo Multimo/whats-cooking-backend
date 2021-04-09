@@ -119,7 +119,7 @@ impl IRepository for Repository {
         diesel::insert_into(ingredients)
             .values(new_ingredient)
             .execute(&connection)
-            .expect("Error getting all ingredients");
+            .expect("Error create new ingredient");
         return Ok(());
     }
 

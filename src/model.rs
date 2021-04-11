@@ -33,7 +33,7 @@ pub struct Ingredient {
     pub food_subgroup: Option<String>,
 }
 
-#[derive(Insertable, Deserialize, AsChangeset)]
+#[derive(Insertable, Deserialize, AsChangeset, Debug)]
 #[table_name = "ingredients"]
 pub struct NewIngredient {
     pub name: String,
@@ -54,7 +54,7 @@ pub struct RecipeIngredient {
     pub updated_at: Option<NaiveDateTime>,
 }
 
-#[derive(Insertable, Deserialize, AsChangeset)]
+#[derive(Insertable, Deserialize, AsChangeset, Debug)]
 #[table_name = "recipe_ingredients"]
 pub struct NewRecipeIngredient {
     pub recipe_id: i32,

@@ -116,6 +116,8 @@ impl IRepository for Repository {
 
         let connection = self.0.get_connection();
 
+        log::info!("receipe {:?}", new_ingredient);
+
         diesel::insert_into(ingredients)
             .values(new_ingredient)
             .execute(&connection)

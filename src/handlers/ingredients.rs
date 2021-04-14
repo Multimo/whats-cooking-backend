@@ -21,7 +21,7 @@ pub async fn handle_create_ingredients(mut req: StatefulRequest) -> tide::Result
     return Ok(res);
 }
 
-pub async fn handle_delete_ingredient(mut req: StatefulRequest) -> tide::Result {
+pub async fn handle_delete_ingredient(req: StatefulRequest) -> tide::Result {
     let param_id = req.param("id")?;
     let ingredient_id = param_id.parse::<i32>()?;
     &req.state().repository.delete_ingredient(ingredient_id);

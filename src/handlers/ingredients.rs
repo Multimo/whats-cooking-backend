@@ -20,3 +20,13 @@ pub async fn handle_create_ingredients(mut req: StatefulRequest) -> tide::Result
     let res = tide::Response::builder(200).body(response_json).build();
     return Ok(res);
 }
+
+pub async fn handle_delete_ingredient(mut req: StatefulRequest) -> tide::Result {
+    let param_id = req.param("id")?;
+    let ingredient_id = param_id.parse::<i32>()?;
+    &req.state().repository.delete_ingredient(ingredient_id);
+
+    let response_json = json!({ "response": "success" });
+    let res = tide::Response::builder(200).body(response_json).build();
+    return Ok(res);
+}

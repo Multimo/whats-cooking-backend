@@ -17,6 +17,7 @@ pub trait IRepository {
     // Ingredients
     fn get_all_ingredients(&self) -> Result<Vec<Ingredient>, String>;
     fn create_ingredient(&self, new_ingredient: &NewIngredient) -> Result<(), String>;
+    fn delete_ingredient(&self, id: i32) -> Result<(), String>;
 
     // Recipe Ingredient
     fn create_recipe_ingredients(
@@ -116,12 +117,26 @@ impl IRepository for Repository {
 
         let connection = self.0.get_connection();
 
-        log::info!("receipe {:?}", new_ingredient);
+        log::info!("new_ingredient {:?}", new_ingredient);
 
         diesel::insert_into(ingredients)
             .values(new_ingredient)
             .execute(&connection)
             .expect("Error create new ingredient");
+        return Ok(());
+    }
+
+    fn delete_ingredient(&self, ingredient_id: i32) -> Result<(), String> {
+        use schema::ingredients::dsl::*;
+
+        let connection = self.0.get_connection();
+
+        log::info!("deleting ingredient {:?}", ingredient_id);
+        let ingredient_to_delete = ingredients.filter(id.eq(ingredient_id));
+
+        diesel::delete(ingredient_to_delete)
+            .execute(&connection)
+            .expect("Error deleting ingredient");
         return Ok(());
     }
 

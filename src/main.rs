@@ -52,7 +52,8 @@ async fn main() -> tide::Result<()> {
         .delete(handlers::recipes::handle_delete_recipes);
     api.at("/ingredients")
         .get(handlers::ingredients::handle_get_all_ingredients)
-        .post(handlers::ingredients::handle_create_ingredients);
+        .post(handlers::ingredients::handle_create_ingredients)
+        .delete(handlers::ingredients::handle_delete_ingredient);
     api.listen("127.0.0.1:8082").await?;
     Ok(())
 }

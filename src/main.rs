@@ -35,7 +35,7 @@ async fn main() -> tide::Result<()> {
 
     let cors = CorsMiddleware::new()
         .allow_methods(
-            "GET, POST, OPTIONS"
+            "GET, POST, OPTIONS, DELETE"
                 .parse::<headers::HeaderValue>()
                 .unwrap(),
         )
@@ -54,6 +54,9 @@ async fn main() -> tide::Result<()> {
         .get(handlers::ingredients::handle_get_all_ingredients)
         .post(handlers::ingredients::handle_create_ingredients)
         .delete(handlers::ingredients::handle_delete_ingredient);
+    api.at("/ingredients/:id")
+        .delete(handlers::ingredients::handle_delete_ingredient);
+
     api.listen("127.0.0.1:8082").await?;
     Ok(())
 }
